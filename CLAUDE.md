@@ -50,3 +50,7 @@ Efter varje uppgift
 * Kör build + test
 * Skriv ett tydligt commit-meddelande
 * Sammanfatta kort vad som ändrades och varför
+
+## CI
+- GitHub Actions kör build + test automatiskt vid varje push (.github/workflows/android-build.yml)
+- Kolla alltid Actions-fliken efter en push innan du litar på att koden fungerar
