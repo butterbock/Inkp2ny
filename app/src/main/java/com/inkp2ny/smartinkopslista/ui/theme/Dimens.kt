@@ -9,4 +9,7 @@ object Dimens {
     val SpacingLarge = 24.dp
     val SpacingExtraLarge = 32.dp
     val CardCornerRadius = 20.dp
+
+    /** Extra utrymme längst ner i scrollbart innehåll så en flytande FAB inte täcker sista raden. */
+    val FabClearance = 96.dp
 }

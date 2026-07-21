@@ -6,20 +6,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import com.inkp2ny.smartinkopslista.data.local.entity.ShoppingItem
 import com.inkp2ny.smartinkopslista.ui.theme.Dimens
 import java.util.Locale
@@ -28,7 +23,6 @@ import java.util.Locale
 fun ShoppingItemCard(
     item: ShoppingItem,
     onToggleCompleted: (ShoppingItem) -> Unit,
-    onDelete: (ShoppingItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -71,13 +65,6 @@ fun ShoppingItemCard(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            IconButton(onClick = { onDelete(item) }) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = "Ta bort ${item.name}",
-                    tint = MaterialTheme.colorScheme.error,
-                )
-            }
         }
     }
 }

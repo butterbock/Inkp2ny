@@ -2,6 +2,7 @@ package com.inkp2ny.smartinkopslista.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.inkp2ny.smartinkopslista.data.local.BudgetPreferences
 import com.inkp2ny.smartinkopslista.data.local.entity.ShoppingCategories
 import com.inkp2ny.smartinkopslista.data.local.entity.ShoppingItem
 import com.inkp2ny.smartinkopslista.data.repository.ShoppingRepository
@@ -11,9 +12,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ShoppingViewModel(private val repository: ShoppingRepository) : ViewModel() {
+class ShoppingViewModel(
+    private val repository: ShoppingRepository,
+    private val budgetPreferences: BudgetPreferences,
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ShoppingUiState())
+    private val _uiState = MutableStateFlow(ShoppingUiState(budget = budgetPreferences.getBudget()))
     val uiState: StateFlow<ShoppingUiState> = _uiState.asStateFlow()
 
     init {
@@ -57,5 +61,14 @@ class ShoppingViewModel(private val repository: ShoppingRepository) : ViewModel(
 
     fun clearCompletedItems() {
         viewModelScope.launch { repository.deleteCompletedItems() }
+    }
+
+    fun updateSearchQuery(query: String) {
+        _uiState.update { it.copy(searchQuery = query) }
+    }
+
+    fun updateBudget(newBudget: Double) {
+        budgetPreferences.setBudget(newBudget)
+        _uiState.update { it.copy(budget = newBudget) }
     }
 }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.inkp2ny.smartinkopslista.ui.screens.ShoppingListScreen
+import com.inkp2ny.smartinkopslista.ui.screens.MainScreen
 import com.inkp2ny.smartinkopslista.ui.theme.SmartInkopslistaTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,11 +12,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val repository = (application as SmartInkopslistaApp).shoppingRepository
+        val app = application as SmartInkopslistaApp
 
         setContent {
             SmartInkopslistaTheme {
-                ShoppingListScreen(repository = repository)
+                MainScreen(
+                    repository = app.shoppingRepository,
+                    budgetPreferences = app.budgetPreferences,
+                )
             }
         }
     }

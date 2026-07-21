@@ -3,12 +3,14 @@ package com.inkp2ny.smartinkopslista.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
+import androidx.compose.material3.ExposedDropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -32,6 +34,7 @@ fun AddItemDialog(
     var quantity by remember { mutableStateOf("1 st") }
     var priceText by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(ShoppingCategories.GENERAL) }
+    var isCategoryMenuExpanded by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -60,14 +63,35 @@ fun AddItemDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth(),
                 )
-                Text("Kategori")
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(Dimens.SpacingSmall)) {
-                    items(ShoppingCategories.ALL) { category ->
-                        FilterChip(
-                            selected = category == selectedCategory,
-                            onClick = { selectedCategory = category },
-                            label = { Text(category) },
-                        )
+                ExposedDropdownMenuBox(
+                    expanded = isCategoryMenuExpanded,
+                    onExpandedChange = { isCategoryMenuExpanded = it },
+                ) {
+                    OutlinedTextField(
+                        value = selectedCategory,
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Kategori") },
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = isCategoryMenuExpanded)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                    )
+                    ExposedDropdownMenu(
+                        expanded = isCategoryMenuExpanded,
+                        onDismissRequest = { isCategoryMenuExpanded = false },
+                    ) {
+                        ShoppingCategories.ALL.forEach { category ->
+                            DropdownMenuItem(
+                                text = { Text(category) },
+                                onClick = {
+                                    selectedCategory = category
+                                    isCategoryMenuExpanded = false
+                                },
+                            )
+                        }
                     }
                 }
             }
