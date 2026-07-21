@@ -1,0 +1,7 @@
+# Kopiera den här filen till "local.properties" (som är gitignorad) och fyll i dina egna värden.
+# Committa ALDRIG local.properties eller riktiga API-nycklar/hemligheter till git.
+
+# sdk.dir=/path/to/Android/sdk
+
+# Exempel: API-nyckel för en framtida karta/plats-integration.
+MAPS_API_KEY=

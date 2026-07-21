@@ -1,9 +1,22 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
 }
+
+// Hemligheter (API-nycklar m.m.) hämtas från den gitignorade local.properties
+// och exponeras i koden via BuildConfig — de ska aldrig hårdkodas i källkoden.
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+
+fun localProperty(key: String): String = localProperties.getProperty(key).orEmpty()
 
 android {
     namespace = "com.inkp2ny.smartinkopslista"
@@ -15,6 +28,10 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
+        // Exempel: nyckel för en framtida karta/plats-integration (se local.properties.example).
+        // Tom sträng om nyckeln saknas lokalt, så bygget aldrig kraschar för andra utvecklare/CI.
+        buildConfigField("String", "MAPS_API_KEY", "\"${localProperty("MAPS_API_KEY")}\"")
     }
 
     buildTypes {
@@ -35,6 +52,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {

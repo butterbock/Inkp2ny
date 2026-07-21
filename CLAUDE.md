@@ -57,3 +57,8 @@ Efter varje uppgift
 
 ## Arbetsflöde
 - Committa aldrig direkt till main — jobba alltid i en gren och öppna en pull request
+
+## Hemligheter
+- API-nycklar, tokens och andra hemligheter ska aldrig hårdkodas i koden eller committas till git
+- Lägg hemligheter i `local.properties` (gitignorad) och läs in dem i `app/build.gradle.kts` via `buildConfigField`, så de blir tillgängliga i koden via `BuildConfig` — se `local.properties.example` för mönstret
+- `local.properties` ska alltid vara gitignorad
