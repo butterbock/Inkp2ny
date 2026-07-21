@@ -54,3 +54,6 @@ Efter varje uppgift
 ## CI
 - GitHub Actions kör build + test automatiskt vid varje push (.github/workflows/android-build.yml)
 - Kolla alltid Actions-fliken efter en push innan du litar på att koden fungerar
+
+## Arbetsflöde
+- Committa aldrig direkt till main — jobba alltid i en gren och öppna en pull request
